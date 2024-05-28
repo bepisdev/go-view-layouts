@@ -4,8 +4,6 @@ import (
 	"html/template"
 	"net/http"
 	"sync"
-
-	"github.com/joshburnsxyz/wikara/pkg/page"
 )
 
 var (

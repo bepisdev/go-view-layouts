@@ -36,3 +36,19 @@ func Init(template_files map[string]string, layout_file string) map[string]*temp
 // 		http.Error(w, err.Error(), http.StatusInternalServerError)
 // 	}
 // }
+
+func RenderTemplate(w http.ResponseWriter, tmplname string, layout string, data any) {
+	templatesLock.Lock()
+	defer templatesLock.Unlock()
+
+	tmpl, ok := templates[tmplname]
+	if !ok {
+		http.Error(w, "Template not found", http.StatusInternalServerError)
+		return
+	}
+
+	err := tmpl.ExecuteTemplate(w, layout, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}

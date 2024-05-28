@@ -14,8 +14,9 @@ var (
 func Init(template_files ...string, layout_file string) map[string]*template.Template {
 	templates = make(map[string]*template.Template)
 	for _, file := range template_files {
-    templates[file] = template.Must(template.ParseFiles(file, layout_file))
-  }
+    		templates[file] = template.Must(template.ParseFiles(file, layout_file))
+  	}
+	return templates
 }
 
 // FIXME: This is the original render function from Wikara. Modify this to 

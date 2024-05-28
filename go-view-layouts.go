@@ -11,10 +11,10 @@ var (
 	templatesLock sync.Mutex
 )
 
-func Init(template_files ...string, layout_file string) map[string]*template.Template {
+func Init(template_files map[string]string, layout_file string) map[string]*template.Template {
 	templates = make(map[string]*template.Template)
 	for _, file := range template_files {
-    		templates[file] = template.Must(template.ParseFiles(file, layout_file))
+    		templates[template_files[0]] = template.Must(template.ParseFiles(template_files[1], layout_file))
   	}
 	return templates
 }

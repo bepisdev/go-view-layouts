@@ -11,12 +11,21 @@ var (
 	templatesLock sync.Mutex
 )
 
-func Init(template_files map[string]string, layout_file string) map[string]*template.Template {
+// initializes the templates map by parsing the provided template files with the layout file.
+// Returns an error if any template fails to parse.
+func Init(templateFiles map[string]string, layoutFile string) error {
+	templatesLock.Lock()
+	defer templatesLock.Unlock()
+
 	templates = make(map[string]*template.Template)
-	for _, file := range template_files {
-    		templates[template_files[0]] = template.Must(template.ParseFiles(template_files[1], layout_file))
-  	}
-	return templates
+	for name, file := range templateFiles {
+		tmpl, err := template.ParseFiles(file, layoutFile)
+		if err != nil {
+			return err
+		}
+		templates[name] = tmpl
+	}
+	return nil
 }
 
 // renders the specified template with the given data and writes the output to the http.ResponseWriter.

@@ -21,7 +21,7 @@ func Init(templateFiles map[string]string, layoutFile string) error {
 	for name, file := range templateFiles {
 		tmpl, err := template.ParseFiles(file, layoutFile)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to parse template %s: %w", name, err)
 		}
 		templates[name] = tmpl
 	}

@@ -8,7 +8,7 @@ import (
 
 var (
 	templates     map[string]*template.Template
-	templatesLock sync.Mutex
+	templatesLock sync.RWMutex
 )
 
 // initializes the templates map by parsing the provided template files with the layout file.
@@ -30,8 +30,8 @@ func Init(templateFiles map[string]string, layoutFile string) error {
 
 // renders the specified template with the given data and writes the output to the http.ResponseWriter.
 func RenderTemplate(w http.ResponseWriter, tmplName string, layout string, data any) {
-	templatesLock.Lock()
-	defer templatesLock.Unlock()
+	templatesLock.RLock()
+	defer templatesLock.RUnlock()
 
 	tmpl, ok := templates[tmplName]
 	if !ok {

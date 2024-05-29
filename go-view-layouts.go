@@ -19,29 +19,12 @@ func Init(template_files map[string]string, layout_file string) map[string]*temp
 	return templates
 }
 
-// FIXME: This is the original render function from Wikara. Modify this to 
-// be a) more generic b) consume user defined templates.
-// func RenderTemplate(w http.ResponseWriter, tmplname string, p *page.Page) {
-// 	templatesLock.Lock()
-// 	defer templatesLock.Unlock()
-
-// 	tmpl, ok := templates[tmplname+".html"]
-// 	if !ok {
-// 		http.Error(w, "Template not found", http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	err := tmpl.ExecuteTemplate(w, "base", p)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-// 	}
-// }
-
-func RenderTemplate(w http.ResponseWriter, tmplname string, layout string, data any) {
+// renders the specified template with the given data and writes the output to the http.ResponseWriter.
+func RenderTemplate(w http.ResponseWriter, tmplName string, layout string, data any) {
 	templatesLock.Lock()
 	defer templatesLock.Unlock()
 
-	tmpl, ok := templates[tmplname]
+	tmpl, ok := templates[tmplName]
 	if !ok {
 		http.Error(w, "Template not found", http.StatusInternalServerError)
 		return

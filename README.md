@@ -10,7 +10,7 @@ This Go library provides a thin wrapper around Go's `html/template` package for 
 ## Installation
 
 ```bash
-go get github.com/joshburnsxyz/go-view-layouts
+go get github.com/bepisdev/go-view-layouts
 ```
 
 ## Usage
